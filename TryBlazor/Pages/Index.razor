@@ -1,11 +1,48 @@
 ﻿@page "/"
+@inject HttpClient HttpClient
 
-<PageTitle>Try Blazor</PageTitle>
+<p>
+    <MButton OnClick="RunCode">Run</MButton>
+</p>
 
 <div>
-  编辑器
+    <div id="code">
+        <MMonacoEditor @ref="_editor"
+                       Style="height:500px"
+                       EditorOptions="_options">
+        </MMonacoEditor>
+    </div>
+    <div id="splitter"></div>
+    <div id="render">
+        @if (_type != null)
+        {
+            <DynamicComponent Type="@_type" />
+        }
+        else
+        {
+            <h1>渲染区块</h1>
+        }
+    </div>
 </div>
 
-<div>
-  渲染区域
-</div>
+<style>
+    #code {
+        width: 50%;
+        height: 100%;
+        float: left;
+    }
+
+    #render {
+        width: 49%;
+        height: 100%;
+        float: right;
+    }
+
+    #splitter {
+        width: 10px;
+        height: 100%;
+        float: left;
+        cursor: col-resize;
+        background-color: #999999;
+    }
+</style>
